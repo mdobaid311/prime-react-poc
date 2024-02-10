@@ -1,95 +1,71 @@
 import React from "react";
+import logo from "../../assets/DW-logo.png";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  const items = [
+  const links = [
     {
-      label: "Home",
-      icon: "pi pi-home",
+      label: "Dashboard",
+      icon: "pi pi-home text-xl",
+      to: "/",
     },
     {
-      label: "Features",
-      icon: "pi pi-star",
-    },
-    {
-      label: "Projects",
-      icon: "pi pi-search",
-      items: [
-        {
-          label: "Core",
-          icon: "pi pi-bolt",
-          shortcut: "⌘+S",
-        },
-        {
-          label: "Blocks",
-          icon: "pi pi-server",
-          shortcut: "⌘+B",
-        },
-        {
-          label: "UI Kit",
-          icon: "pi pi-pencil",
-          shortcut: "⌘+U",
-        },
-        {
-          separator: true,
-        },
-        {
-          label: "Templates",
-          icon: "pi pi-palette",
-          items: [
-            {
-              label: "Apollo",
-              icon: "pi pi-palette",
-              badge: 2,
-            },
-            {
-              label: "Arora",
-              icon: "pi pi-palette",
-              badge: 5,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      label: "Documentation",
-      icon: "pi pi-question",
-      items: [
-        {
-          label: "Getting Started",
-          icon: "pi pi-book",
-        },
-        {
-          label: "Foundation",
-          icon: "pi pi-info",
-        },
-        {
-          label: "Components",
-          icon: "pi pi-th-large",
-        },
-      ],
+      label: "User Management",
+      icon: "pi pi-user text-xl",
+      to: "user-management",
     },
   ];
 
   return (
-    <div className="h-full flex flex-col items-center justify-between px-2 py-4 border-r max-w-28">
-      <div className="flex flex-col gap-8">
-        <div className="flex flex-col items-center justify-center bg-primary text-white hover:text-blue-500 text-center cursor-pointer">
-          <i className="pi pi-fw pi-home text-2xl"></i>
-          <span className="text-sm">Dashboard</span>
+    <div className="h-screen flex">
+      <aside className="flex-col items-center shadow h-full">
+        <div className="h-16 flex items-center w-full">
+          <Link className="h-6 w-6 mx-auto" to="/">
+            <img className="h-6 w-6 mx-auto" src={logo} alt="svelte logo" />
+          </Link>
         </div>
-        <div className="flex flex-col items-center justify-center bg-primary text-white hover:text-blue-500 text-center cursor-pointer">
-          <i className="pi pi-fw pi-user text-2xl"></i>
-          <span className="text-sm">User Management</span>
+
+        <ul>
+          {links.map((link) => (
+            <li
+              key={link.to}
+              className="hover:brightness-125 hover:backdrop-blur-3xl"
+            >
+              <Link
+                to={link.to}
+                className="h-16 px-6 flex justify-center items-center w-full
+            focus:text-blue-500"
+              >
+                <i className={link.icon}></i>
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-auto h-16 flex items-center w-full">
+          <button
+            className="h-16 w-full flex justify-center items-center
+			 focus:text-blue-500 hover:backdrop-blur-2xl hover:brightness-125 focus:outline-none"
+          >
+            <svg
+              className="h-5 w-5 text-red-700"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </button>
         </div>
-        <div className="flex flex-col items-center justify-center bg-primary text-white hover:text-blue-500 text-center cursor-pointer">
-          <i className="pi pi-fw pi-briefcase text-2xl"></i>
-          <span className="text-sm">Project Management</span>
-        </div>
-        <div className="flex flex-col items-center justify-center bg-primary text-white hover:text-blue-500 text-center cursor-pointer">
-          <i className="pi pi-fw pi-chart-bar text-2xl"></i>
-          <span className="text-sm">Analytics</span>
-        </div>
-      </div>
+      </aside>
     </div>
   );
 };
