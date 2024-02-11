@@ -4,6 +4,7 @@ import { Chart } from "primereact/chart";
 import { Panel } from "primereact/panel";
 import { TabPanel, TabView } from "primereact/tabview";
 import React, { useEffect, useState } from "react";
+import MapChart from "../MapChart/MapChart";
 
 const Dashboard = () => {
   const cardData = [
@@ -176,6 +177,65 @@ const Dashboard = () => {
   );
   const surfaceBorder = documentStyle.getPropertyValue("--surface-border");
 
+  const [combochartData] = useState({
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: [
+      {
+        type: "line",
+        label: "Dataset 1",
+        borderColor: "#42A5F5",
+        borderWidth: 2,
+        fill: false,
+        tension: 0.4,
+        data: [50, 25, 12, 48, 56, 76, 42],
+      },
+      {
+        type: "bar",
+        label: "Dataset 2",
+        backgroundColor: "#66BB6A",
+        data: [21, 84, 24, 75, 37, 65, 34],
+        borderColor: "white",
+        borderWidth: 2,
+      },
+      {
+        type: "bar",
+        label: "Dataset 3",
+        backgroundColor: "#FFA726",
+        data: [41, 52, 24, 74, 23, 21, 32],
+      },
+    ],
+  });
+
+  const [lightOptions] = useState({
+    maintainAspectRatio: false,
+    aspectRatio: 0.6,
+    plugins: {
+      legend: {
+        labels: {
+          color: "#495057",
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: "#495057",
+        },
+        grid: {
+          color: "#ebedef",
+        },
+      },
+      y: {
+        ticks: {
+          color: "#495057",
+        },
+        grid: {
+          color: "#ebedef",
+        },
+      },
+    },
+  });
+
   return (
     <div className="w-full p-5 overflow-y-auto h-full ">
       <Card className="rounded-2xl rounded-">
@@ -191,7 +251,7 @@ const Dashboard = () => {
               body: "w-full",
             }}
           >
-            <div className="flex justify-between items-center  flex-1">
+            <div className="flex justify-between items-center  flex-1 text-(--primary-50)">
               <div className="flex flex-col ">
                 <div className="text-lg">{card.label}</div>
                 <div className="text-3xl">{card.value}</div>
@@ -204,66 +264,24 @@ const Dashboard = () => {
         ))}
       </div>
 
-      <div className="flex gap-8 flex-1 h-full">
+      <div className="flex gap-8 flex-1 h-full mt-4 ">
         <Card
-          title="Sales"
-          className="mt-4 rounded-2xl flex-[6] h-full"
+          title="Sales by State"
+          className="h-full rounded-2xl"
           pt={{
             header: "w-full rounded-tl-2xl rounded-tr-2xl",
-            body: "h-full",
-            content: "h-[90%]",
+            body: "h-full overflow-hidden",
+            content: "h-full",
           }}
         >
-          <TabView
-            className="h-[90%]"
-            pt={{
-              panelContainer: "h-full",
-            }}
-          >
-            <TabPanel
-              header="Sales"
-              pt={{
-                content: "h-full",
-              }}
-            >
-              <Chart
-                type="bar"
-                data={chartData}
-                options={chartOptions}
-                className="h-full w-full"
-              />
-            </TabPanel>
-            <TabPanel
-              pt={{
-                content: "h-full",
-              }}
-              header="Orders"
-            >
-              <Chart
-                type="pie"
-                data={chartData}
-                options={chartOptions}
-                className="h-full w-full"
-              />
-            </TabPanel>
-            <TabPanel
-              pt={{
-                content: "h-full",
-              }}
-              header="Returns"
-            >
-              <Chart
-                type="line"
-                data={chartData}
-                options={chartOptions}
-                className="h-full w-full"
-              />
-            </TabPanel>
-          </TabView>
+          <div className="h-full ">
+            <MapChart />
+          </div>
         </Card>
+
         <Card
           title="Top Orders"
-          className="mt-4 rounded-2xl flex-[3] h-full"
+          className="rounded-2xl flex-[3]"
           pt={{
             header: "w-full rounded-tl-2xl rounded-tr-2xl",
             body: "h-full overflow-hidden",
@@ -283,10 +301,78 @@ const Dashboard = () => {
                   </div>
                   <div className="text-sm">{order.time}</div>
                 </div>
+                <div>Order description goes here if any.</div>
               </Panel>
             ))}
           </div>
         </Card>
+      </div>
+      <div className="flex gap-8 mt-4 h-[500px] ">
+        <div className="flex-1 h-full">
+          <Card
+            title="Sales"
+            className="h-full"
+            pt={{
+              header: "w-full rounded-tl-2xl rounded-tr-2xl",
+              body: "h-full",
+              content: "h-[90%]",
+            }}
+          >
+            <TabView
+              className="h-[90%]"
+              pt={{
+                panelContainer: "h-full",
+              }}
+            >
+              <TabPanel
+                pt={{
+                  content: "h-full",
+                }}
+                header="Orders"
+              >
+                <Chart
+                  type="pie"
+                  data={chartData}
+                  options={chartOptions}
+                  className="h-full w-full"
+                />
+              </TabPanel>
+              <TabPanel
+                header="Sales"
+                pt={{
+                  content: "h-full",
+                }}
+              >
+                <Chart
+                  type="bar"
+                  data={chartData}
+                  options={chartOptions}
+                  className="h-full w-full"
+                />
+              </TabPanel>
+              <TabPanel
+                pt={{
+                  content: "h-full",
+                }}
+                header="Returns"
+              >
+                <Chart
+                  type="line"
+                  data={chartData}
+                  options={chartOptions}
+                  className="h-full w-full"
+                />
+              </TabPanel>
+            </TabView>
+          </Card>
+        </div>
+        <div className="flex-1 h-full">
+          <Card className="h-full" 
+          title="Orders"
+          >
+            <Chart type="bar" data={combochartData} options={chartOptions} />
+          </Card>
+        </div>
       </div>
     </div>
   );
