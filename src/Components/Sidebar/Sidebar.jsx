@@ -14,6 +14,11 @@ const Sidebar = () => {
       icon: "pi pi-user text-xl",
       to: "user-management",
     },
+    {
+      label: "Analysis",
+      icon: "pi pi-chart-bar text-xl",
+      to: "analysis",
+    },
   ];
 
   return (

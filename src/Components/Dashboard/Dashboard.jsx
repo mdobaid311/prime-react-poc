@@ -311,7 +311,7 @@ const Dashboard = () => {
         <div className="flex-1 h-full">
           <Card
             title="Sales"
-            className="h-full"
+            className="h-full rounded-2xl"
             pt={{
               header: "w-full rounded-tl-2xl rounded-tr-2xl",
               body: "h-full",
@@ -367,9 +367,7 @@ const Dashboard = () => {
           </Card>
         </div>
         <div className="flex-1 h-full">
-          <Card className="h-full" 
-          title="Orders"
-          >
+          <Card className="h-full rounded-2xl" title="Orders">
             <Chart type="bar" data={combochartData} options={chartOptions} />
           </Card>
         </div>

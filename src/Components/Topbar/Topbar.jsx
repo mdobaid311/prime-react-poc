@@ -227,7 +227,7 @@ const Topbar = () => {
       <InputText
         placeholder="Search"
         type="text"
-        className="w-8rem sm:w-auto"
+        className="w-8 sm:w-auto px-2"
       />
       <Avatar
         image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
